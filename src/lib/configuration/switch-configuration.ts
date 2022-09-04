@@ -23,4 +23,9 @@ export interface SwitchConfiguration {
      * Gets or sets the timeout for the timer.
      */
     timeout: number;
+
+    /**
+     * Indicate if the switch is part of the radio switch group
+     */
+    isRadio: boolean;
 }

@@ -54,6 +54,13 @@
                                         "type": "integer",
                                         "description": "If a value is set (in seconds), a timer is started when the 'selection' changes. When the timer elapses, the 'selection' is reset to the button that is marked as default on. If no default on button is provided, all are switched off."
                                     }
+                                    ,
+                                    "isRadio": {
+                                        "title": "Is Radio Switch",
+                                        "type": "boolean",
+                                        "default": true,
+                                        "description": "To indicate if this switch is part of the radio switch group. Default is YES. Set to NO to allow the switch stay ON/OFF independently"
+                                    }
                                 }
                             }
                         },

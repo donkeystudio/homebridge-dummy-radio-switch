@@ -50,7 +50,7 @@ export class GroupController {
                     platform.logger.info(`[${groupConfiguration.name}] switch ${switchConfiguration.name} changed to ${newValue}`);
 
                     // Checks if there are already switches which are on
-                    const otherOnCharacteristics = this.onCharacteristics.filter(c => c.configuration.name !== switchConfiguration.name && c.characteristic.value);
+                    const otherOnCharacteristics = this.onCharacteristics.filter(c => c.configuration.name !== switchConfiguration.name && c.characteristic.value && c.configuration.isRadio);
                     for (let otherOnCharacteristic of otherOnCharacteristics) {
                         otherOnCharacteristic.characteristic.value = false;
                     }
@@ -63,7 +63,7 @@ export class GroupController {
                     onCharacteristic.value = newValue;
 
                     // If the switch is turned off and a next on switch is defined, it is switched on
-                    if (!newValue && switchConfiguration.nextOnSwitchName) {
+                    if (!newValue && switchConfiguration.nextOnSwitchName && switchConfiguration.isRadio) {
 
                         const nextOnCharacteristic = this.onCharacteristics.find(c => c.configuration.name === switchConfiguration.nextOnSwitchName);
                         if (nextOnCharacteristic) {
@@ -109,7 +109,7 @@ export class GroupController {
         }
 
         // Checks if currently all switches are off
-        if (this.onCharacteristics.some(c => c.characteristic.value)) {
+        if (this.onCharacteristics.find(c => c.configuration.isRadio) && this.onCharacteristics.some(c => c.characteristic.value)) {
             return;
         }
 
@@ -133,7 +133,7 @@ export class GroupController {
             }
 
             // If the switch is turned off and a next on switch is defined, it is switched on
-            if (switchConfiguration.nextOnSwitchName) {
+            if (switchConfiguration.nextOnSwitchName && switchConfiguration.isRadio) {
 
                 const nextOnCharacteristic = this.onCharacteristics.find(c => c.configuration.name === switchConfiguration.nextOnSwitchName);
                 if (nextOnCharacteristic) {
